@@ -1,6 +1,6 @@
-# Wager NFL Adonis fullstack application
+# Fundyay Adonis fullstack application
 
-This is the fullstack app for AdonisJs LiveNOut, it comes pre-configured with.
+This is the fullstack app for AdonisJs Fundyay, it comes pre-configured with:
 
 1. Bodyparser
 2. Session
@@ -30,7 +30,7 @@ Run the following command to run startup migrations.
 adonis migration:run
 ```
 
-Serving WAG:
+Serving Fundyay:
 Console app:
-- pull first youtube link and populate into bands: node ace, then choose console 
+- pull all products from Shopify 
 - 

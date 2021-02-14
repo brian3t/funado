@@ -57,8 +57,7 @@ const aliases = {}
 |
 */
 const commands = [
-  'App/Commands/ScrNflTeam',
-  'App/Commands/ScrEspnGame',
+  'App/Commands/GetProdList',
   'App/Commands/UserMng',
 ]
 

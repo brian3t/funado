@@ -31,6 +31,7 @@
     "lodash": "^4.17.20",
     "moment": "^2.29.1",
     "mysql2": "^2.2.5",
+    "shopify-api-node": "^3.6.5",
     "sleep": "^6.3.0"
   },
   "devDependencies": {},
