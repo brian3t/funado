@@ -36,5 +36,6 @@ adonis migration:run
 
 Serving Fundyay:
 Console app:
-- pull all products from Shopify 
+- pull all products from Shopify get_prod_list
+- pull all sales from Shopify get_sale
 - 
