@@ -58,6 +58,7 @@ const aliases = {}
 */
 const commands = [
   'App/Commands/GetProdList',
+  'App/Commands/GetSale',
   'App/Commands/UserMng',
 ]
 
