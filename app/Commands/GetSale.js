@@ -56,6 +56,7 @@ class GetSale extends Command {
 
         for (let order of orders) {
           let ord_payload = {entity_id: entity.id, spfid: order.id, order_number: order.order_number}
+          /** @type {Ord} **/
           let ord_model = await Ord.findOrCreate(ord_payload, ord_payload)
           ord_model.last_synced_at = (new mm()).format('YYYY-MM-DD hh:mm:ss')
           ord_model.spf_note = order.note
@@ -70,7 +71,7 @@ class GetSale extends Command {
           ord_model.tags = order.tags
           ord_model.contact_email = order.contact_email || order.email
           ord_model.order_status_url = order.order_status_url
-          const ord_model_ret = await ord_model.save()
+          const ord_model_ret = await ord_model.save(undefined)
           if (! ord_model_ret) {
             console.error(`Failed saving order model, skipping this order`)
             DB.close()
@@ -84,18 +85,21 @@ class GetSale extends Command {
           let ord_lines = order.line_items
           for (let ord_line of ord_lines) {
             const ord_line_payload = {order_id: ord_model.id, spfid: ord_line.id}
+            /** @type {OrderLine} **/
             const ord_line_model = await OrderLine.findOrCreate(ord_line_payload, ord_line_payload)
             if (! ord_line_model instanceof OrderLine) {
               console.error(`Failed saving order line`)
             }
             //linking to the product
+            /** @type {Product} **/
             let prod_model = await Product.findBy('spfid', ord_line.product_id)
             if (! (prod_model instanceof Product)){
               console.error(`Error looking up product`)
+              continue
             }
 
             ord_line_model.last_synced_at = (new mm()).format('YYYY-MM-DD hh:mm:ss')
-            ord_line_model.product_id = ord_line.product_id
+            ord_line_model.product_id = prod_model.id
             ord_line_model.variant_id = ord_line.variant_id
             ord_line_model.quantity = ord_line.quantity
             ord_line_model.fulfillment_service = ord_line.fulfillment_service
@@ -103,7 +107,10 @@ class GetSale extends Command {
             ord_line_model.price = parseFloat(ord_line.price)
             ord_line_model.total_discount = parseFloat(ord_line.total_discount)
             ord_line_model.fulfillment_status = ord_line.fulfillment_status || ''
-
+            const ord_line_model_ret = await ord_line_model.save(undefined)
+            if (!ord_line_model_ret){
+              console.error(`Error saving order line`)
+            }
           }
         }
 
